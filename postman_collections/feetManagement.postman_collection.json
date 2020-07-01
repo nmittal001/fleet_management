@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "5322c129-749e-4c75-a408-e2155bb9b130",
+		"name": "feetManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TEST API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7005/fleetManagement",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"fleetManagement"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REGISTER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"niteshmittal001@gmail.com\",\n    \"first_name\": \"Nitesh\",\n    \"last_name\": \"Mittal\",\n    \"phone_no\": \"9706323868\",\n    \"password\": \"password\",\n    \"driver_license\": \"MH1420110062821\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7005/register",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"email\": \"niteshmittal003@gmail.com\",\n    \"password\": \"password\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7005/login",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET USER PROFILE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pdGVzaG1pdHRhbDAwM0BnbWFpbC5jb20iLCJpYXQiOjE1OTM2MTgxOTgsImV4cCI6MTU5MzY2MTM5OH0.a5MCEAflMkfZ36HDqQkM7B8k8gveQcK_-rqcK7fZZDY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:7005/fleetManagement/getUserProfile",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"fleetManagement",
+						"getUserProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE USER PROFILE",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pdGVzaG1pdHRhbDAwM0BnbWFpbC5jb20iLCJ1c2VyX2lkIjoiZDYxNmY0ZjAtYmJhOC0xMWVhLTlhMGItOWQyYThmZjQzMjgxIiwiaWF0IjoxNTkzNjE5NzE3LCJleHAiOjE1OTM2NjI5MTd9.d5Ed_zOQhvncMYrHHTzpbjHsS2Uy1xo724L2FHG-6I0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"source_location\": \"Bangalore\",\n    \"destination_location\": \"Kolkota\",\n    \"start_date\": \"2020-07-01T15:40:40.895Z\",\n    \"end_date\": \"2020-07-01T21:40:40.895Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7005/fleetManagement/updateTrip?trip_id=3d194450-bbcc-11ea-9a0b-9d2a8ff43281",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"fleetManagement",
+						"updateTrip"
+					],
+					"query": [
+						{
+							"key": "trip_id",
+							"value": "3d194450-bbcc-11ea-9a0b-9d2a8ff43281"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE TRIP",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pdGVzaG1pdHRhbDAwM0BnbWFpbC5jb20iLCJ1c2VyX2lkIjoiZDYxNmY0ZjAtYmJhOC0xMWVhLTlhMGItOWQyYThmZjQzMjgxIiwiaWF0IjoxNTkzNjE5NzE3LCJleHAiOjE1OTM2NjI5MTd9.d5Ed_zOQhvncMYrHHTzpbjHsS2Uy1xo724L2FHG-6I0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"source_location\": \"Bangalore\",\n    \"destination_location\": \"Kolkota\",\n    \"start_date\": \"2020-07-01T21:40:40.895Z\",\n    \"end_date\": \"2020-07-01T23:40:40.895Z\",\n    \"purpose_of_visit\": \"business\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7005/fleetManagement/createTrip",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"fleetManagement",
+						"createTrip"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

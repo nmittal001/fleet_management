@@ -1,0 +1,28 @@
+CREATE KEYSPACE fleet_management WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
+
+CREATE TABLE fleet_management.user (
+    user_id timeuuid PRIMARY KEY,
+    created_at timestamp,
+    driver_license text,
+    email text,
+    first_name text,
+    last_name text,
+    password text,
+    phone_no text,
+    status int,
+    updated_at timestamp
+);
+
+CREATE TABLE fleet_management.trip (
+    user_id timeuuid,
+    id timeuuid,
+    created_at timestamp,
+    destination_location text,
+    end_date timestamp,
+    purpose_of_visit text,
+    source_location text,
+    start_date timestamp,
+    status int,
+    updated_at timestamp,
+    PRIMARY KEY (user_id, id)
+);
