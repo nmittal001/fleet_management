@@ -8,7 +8,7 @@ const cryptr = new Cryptr(constants.SECRET_KEY);
 const db = require("./lib/db.js");
 const userModule = require("./modules/user.module");
 const fleetManagement = require("./routes/fleetManagement");
-
+const registerValidator = require("./validator/registerValidator");
 app.use(bodyparser.json());
 db.configure();
 
@@ -27,9 +27,9 @@ app.get("/fleetManagement", function (req, res) {
 app.post("/register", function (req, res) {
   try {
     console.log("req.url:", req.url);
-    let valid = validation(req.body);
-    if (!valid[0]) {
-      return res.json({ success: 0, message: valid[1] });
+    let isValid = registerValidator.validator(req.body);
+    if (!isValid[0]) {
+      return res.json({ success: 0, message: isValid[1] });
     }
     const encryptedPassword = cryptr.encrypt(req.body.password);
     req.body.password = encryptedPassword;
@@ -119,33 +119,9 @@ let server = app.listen(7005, function () {
 });
 
 /**
- * function for validation
- * @param {JSON} body
- */
-let validation = (body) => {
-  if (!body.hasOwnProperty("email")) {
-    return [false, "email is required"];
-  }
-  if (!body.hasOwnProperty("password")) {
-    return [false, "password is required"];
-  }
-  if (!body.hasOwnProperty("first_name")) {
-    return [false, "first_name is required"];
-  }
-  if (!body.hasOwnProperty("last_name")) {
-    return [false, "last_name is required"];
-  }
-  if (!body.hasOwnProperty("phone_no")) {
-    return [false, "phone_no is required"];
-  }
-  if (!body.hasOwnProperty("driver_license")) {
-    return [false, "driver_license is required"];
-  }
-  return [true, "ok"];
-};
-
-/**
  * function to generate JWT Token
+ * @param {string} email
+ * @param {string} user_id
  */
 let getJwtToken = (email, user_id) => {
   return new Promise(function (resolve, reject) {

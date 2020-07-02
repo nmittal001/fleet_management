@@ -1,4 +1,5 @@
 const tripModel = require("../models/trip.model");
+const updateTripValidator = require("../validator/updateTripValidator");
 let tripModule = {
   createTrip: async function (body, callback) {
     try {
@@ -15,16 +16,16 @@ let tripModule = {
               message: "Trip added successfully",
             });
           } else {
-            callback({ success: 0, message: "Fail to add trip" });
+            callback({ success: 0, message: "Fail to create trip" });
           }
         })
         .catch(function (err) {
           console.log(err);
-          callback({ success: 0, message: "Fail to add trip" });
+          callback({ success: 0, message: "Fail to create trip" });
         });
     } catch (e) {
       console.log(e);
-      callback({ success: 0, message: "Fail to add trip" });
+      callback({ success: 0, message: "Fail to create trip" });
     }
   },
   updateTrip: async function (trip_id, user_id, body, callback) {
@@ -36,7 +37,7 @@ let tripModule = {
           message: "Trip id is not present or this is not upcoming trip",
         });
       }
-      let validator = updateTripValidatior(body, tripDetails.rows[0]);
+      let validator = updateTripValidator.validator(body, tripDetails.rows[0]);
       if (!validator.continue) {
         return callback({ success: 0, message: validator.message });
       }
@@ -61,78 +62,17 @@ let tripModule = {
       callback({ success: 0, message: "Fail to update trip" });
     }
   },
+  getTrips: function (req, callback) {
+    tripModel
+      .getTrips(req.query.trip_time, req.decoded.user_id)
+      .then(function (value) {
+        console.log("value-->>", value);
+        callback({ success: 1, message: value.rows });
+      })
+      .catch(function (err) {
+        console.log(err);
+        callback({ success: 0, message: "Fail to get trip" });
+      });
+  },
 };
 module.exports = tripModule;
-
-var updateTripValidatior = (body, dpTripDetails) => {
-  if (
-    body.hasOwnProperty("source_location") &&
-    body.hasOwnProperty("destination_location")
-  ) {
-    if (body.destination_location === body.source_location) {
-      return {
-        continue: false,
-        message: "destination_location and source_location are same",
-      };
-    }
-  }
-  if (
-    body.hasOwnProperty("source_location") &&
-    !body.hasOwnProperty("destination_location")
-  ) {
-    if (dpTripDetails.destination_location === body.source_location) {
-      return {
-        continue: false,
-        message: "destination_location and source_location are same",
-      };
-    }
-  }
-  if (
-    !body.hasOwnProperty("source_location") &&
-    body.hasOwnProperty("destination_location")
-  ) {
-    if (body.destination_location === dpTripDetails.source_location) {
-      return {
-        continue: false,
-        message: "destination_location and source_location are same",
-      };
-    }
-  }
-  if (body.hasOwnProperty("start_date")) {
-    let diffDate = new Date(body.start_date) - new Date();
-    if (diffDate <= 0) {
-      return {
-        continue: false,
-        message: "start_date is less than present date and time.",
-      };
-    }
-  }
-  if (body.hasOwnProperty("start_date") && body.hasOwnProperty("end_date")) {
-    let diffDate = new Date(body.end_date) - new Date(body.start_date);
-    if (diffDate <= 0) {
-      return {
-        continue: false,
-        message: "end_date should be greater than start_date",
-      };
-    }
-  }
-  if (!body.hasOwnProperty("start_date") && body.hasOwnProperty("end_date")) {
-    let diffDate = new Date(body.end_date) - new Date(dpTripDetails.start_date);
-    if (diffDate <= 0) {
-      return {
-        continue: false,
-        message: "end_date should be greater than start_date",
-      };
-    }
-  }
-  if (body.hasOwnProperty("start_date") && !body.hasOwnProperty("end_date")) {
-    let diffDate = new Date(dpTripDetails.end_date) - new Date(body.start_date);
-    if (diffDate <= 0) {
-      return {
-        continue: false,
-        message: "end_date should be greater than start_date",
-      };
-    }
-  }
-  return { continue: true };
-};

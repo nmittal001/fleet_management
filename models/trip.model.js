@@ -23,7 +23,7 @@ let tripModel = {
       );
     } catch (e) {
       console.log("Exception", e);
-      return "Failed to add user.";
+      return "Failed to create trip.";
     }
   },
   tripAlreadyPresent: function (body) {
@@ -37,7 +37,7 @@ let tripModel = {
       });
     } catch (e) {
       console.log("Exception", e);
-      return "Failed to add user.";
+      return "Failed to get trip.";
     }
   },
   updateTrip: function (trip_id, user_id, body) {
@@ -55,7 +55,7 @@ let tripModel = {
       return db.queryPromise(query, values, { prepare: true });
     } catch (e) {
       console.log("Exception", e);
-      return "Failed to add user.";
+      return "Failed to update trip.";
     }
   },
   getUpcompingTripById: function (trip_id, user_id) {
@@ -67,14 +67,44 @@ let tripModel = {
         " WHERE user_id = ? AND id = ? AND start_date > '" +
         date +
         "' ALLOW FILTERING ";
-      console.log("query-->>", query);
-      console.log("->", trip_id, user_id, date);
       return db.queryPromise(query, [user_id, trip_id], {
         prepare: true,
       });
     } catch (e) {
       console.log("Exception", e);
-      return "Failed to add user.";
+      return "Failed to get trip.";
+    }
+  },
+  getTrips: function (trip_time, user_id) {
+    try {
+      let date = new Date().toISOString();
+      let qry = "";
+      if (trip_time === constants.PAST) {
+        qry =
+          " WHERE user_id = ? AND end_date < '" + date + "' ALLOW FILTERING";
+      }
+      if (trip_time === constants.ONGOING) {
+        qry =
+          " WHERE user_id = ? AND start_date < '" +
+          date +
+          "' AND end_date > '" +
+          date +
+          "' ALLOW FILTERING";
+      }
+      if (trip_time === constants.UPCOMING) {
+        qry =
+          " WHERE user_id = ? AND start_date > '" + date + "' ALLOW FILTERING";
+      }
+
+      let query = "SELECT * FROM " + constants.TABLES.TRIP + qry;
+      console.log("query-->>", query);
+      console.log("->", user_id, date);
+      return db.queryPromise(query, [user_id], {
+        prepare: true,
+      });
+    } catch (e) {
+      console.log("Exception", e);
+      return "Failed to get trips.";
     }
   },
 };

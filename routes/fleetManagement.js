@@ -1,10 +1,12 @@
 const failJson = { success: 0, message: "There was an error!" };
 const userModule = require("../modules/user.module");
 const tripModule = require("../modules/trip.module");
+const createTripValidator = require("../validator/createTripValidator");
+const constants = require("../config/constants");
 module.exports = {
   configure(app) {
     /**
-     * API for getting information of user
+     * API for getting user information
      */
     app.get("/fleetManagement/getUserProfile", function (req, res) {
       try {
@@ -38,9 +40,12 @@ module.exports = {
       }
     });
 
+    /**
+     * Create Trip
+     */
     app.post("/fleetManagement/createTrip", function (req, res) {
       try {
-        let validator = createTripValidatior(req.body);
+        let validator = createTripValidator.validator(req.body);
         if (!validator.continue) {
           return res.json({ success: 0, message: validator.message });
         }
@@ -54,6 +59,9 @@ module.exports = {
       }
     });
 
+    /**
+     * update Trip information
+     */
     app.put("/fleetManagement/updateTrip", function (req, res) {
       try {
         tripModule.updateTrip(
@@ -69,41 +77,28 @@ module.exports = {
         return res.json(failJson);
       }
     });
-  },
-};
 
-var createTripValidatior = (body) => {
-  if (!body.hasOwnProperty("source_location"))
-    return { continue: false, message: "source_location is mandatory." };
-  if (!body.hasOwnProperty("destination_location"))
-    return { continue: false, message: "destination_location is mandatory." };
-  if (!body.hasOwnProperty("start_date"))
-    return { continue: false, message: "start_date is mandatory." };
-  if (!body.hasOwnProperty("end_date"))
-    return { continue: false, message: "end_date is mandatory." };
-  if (!body.hasOwnProperty("purpose_of_visit"))
-    return { continue: false, message: "purpose_of_visit is mandatory." };
-  if (body.hasOwnProperty("start_date")) {
-    let diffDate = new Date(body.start_date) - new Date();
-    if (diffDate <= 0) {
-      return {
-        continue: false,
-        message: "start_date is less than present date and time.",
-      };
-    }
-  }
-  let diffDate = new Date(body.end_date) - new Date(body.start_date);
-  if (diffDate <= 0) {
-    return {
-      continue: false,
-      message: "end_date should be greater than start_date",
-    };
-  }
-  if (body.destination_location === body.source_location) {
-    return {
-      continue: false,
-      message: "destination_location and source_location are same",
-    };
-  }
-  return { continue: true };
+    /**
+     * API for get Trip information
+     */
+    app.get("/fleetManagement/getTrips", function (req, res) {
+      try {
+        if (!req.query.hasOwnProperty("trip_time")) {
+          return res.json({ success: 0, message: "trip_time is required" });
+        }
+        if (!constants.TRIP_TIME.includes(req.query.trip_time)) {
+          return res.json({
+            success: 0,
+            message: "trip_time can be ONGOING, UPCOMING, PAST",
+          });
+        }
+        tripModule.getTrips(req, function (result) {
+          return res.json(result);
+        });
+      } catch (error) {
+        console.log(error);
+        return res.json(failJson);
+      }
+    });
+  },
 };

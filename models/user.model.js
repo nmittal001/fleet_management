@@ -14,7 +14,7 @@ let userModel = {
       return db.queryPromise(query, [], { prepare: true });
     } catch (e) {
       console.log("Exception", e);
-      return "Failed to add user.";
+      return "Failed to get user.";
     }
   },
   addUser: function (body) {

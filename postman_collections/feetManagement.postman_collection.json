@@ -30,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"niteshmittal001@gmail.com\",\n    \"first_name\": \"Nitesh\",\n    \"last_name\": \"Mittal\",\n    \"phone_no\": \"9706323868\",\n    \"password\": \"password\",\n    \"driver_license\": \"MH1420110062821\"\n}",
+					"raw": "{\n    \"email\": \"niteshmittal005@gmail.com\",\n    \"first_name\": \"Nitesh\",\n    \"last_name\": \"Mittal\",\n    \"phone_no\": \"9706323868\",\n    \"password\": \"password\",\n    \"driver_license\": \"MH1420110062821\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -109,13 +109,81 @@
 				"header": [
 					{
 						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pdGVzaG1pdHRhbDAwM0BnbWFpbC5jb20iLCJ1c2VyX2lkIjoiZDYxNmY0ZjAtYmJhOC0xMWVhLTlhMGItOWQyYThmZjQzMjgxIiwiaWF0IjoxNTkzNjY2NTIyLCJleHAiOjE1OTM3MDk3MjJ9.gcY3drWu900yvVb0NM-eJx3KHcXYOS9uojhdTXxPja0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"Nitesh Kumar\",\n    \"last_name\": \"Mittal\",\n    \"phone_no\": \"9706323868\",\n    \"driver_license\": \"MH1420110062821\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7005/fleetManagement/updateUserProfile",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"fleetManagement",
+						"updateUserProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE TRIP",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
 						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pdGVzaG1pdHRhbDAwM0BnbWFpbC5jb20iLCJ1c2VyX2lkIjoiZDYxNmY0ZjAtYmJhOC0xMWVhLTlhMGItOWQyYThmZjQzMjgxIiwiaWF0IjoxNTkzNjE5NzE3LCJleHAiOjE1OTM2NjI5MTd9.d5Ed_zOQhvncMYrHHTzpbjHsS2Uy1xo724L2FHG-6I0",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"source_location\": \"Bangalore\",\n    \"destination_location\": \"Kolkota\",\n    \"start_date\": \"2020-07-01T15:40:40.895Z\",\n    \"end_date\": \"2020-07-01T21:40:40.895Z\"\n}",
+					"raw": "{\n    \"source_location\": \"Bangalore\",\n    \"destination_location\": \"Kolkota\",\n    \"start_date\": \"2020-07-01T21:40:40.895Z\",\n    \"end_date\": \"2020-07-01T23:40:40.895Z\",\n    \"purpose_of_visit\": \"business trip\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7005/fleetManagement/createTrip",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"fleetManagement",
+						"createTrip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE TRIP",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pdGVzaG1pdHRhbDAwM0BnbWFpbC5jb20iLCJ1c2VyX2lkIjoiZDYxNmY0ZjAtYmJhOC0xMWVhLTlhMGItOWQyYThmZjQzMjgxIiwiaWF0IjoxNTkzNjE5NzE3LCJleHAiOjE1OTM2NjI5MTd9.d5Ed_zOQhvncMYrHHTzpbjHsS2Uy1xo724L2FHG-6I0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"source_location\": \"Bangalore\",\n    \"destination_location\": \"Kolkota\",\n    \"start_date\": \"2020-07-02T16:15:40.895Z\",\n    \"end_date\": \"2020-07-02T21:21:40.895Z\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -138,41 +206,40 @@
 							"value": "3d194450-bbcc-11ea-9a0b-9d2a8ff43281"
 						}
 					]
-				}
+				},
+				"description": "Date format should be in ISO (YYYY-MM-DDTHH:MN:SS.MSSZ).<br>\nTo get Date in ISO format: new Date().toISOString()"
 			},
 			"response": []
 		},
 		{
-			"name": "CREATE TRIP",
+			"name": "GET TRIPS",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "x-access-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pdGVzaG1pdHRhbDAwM0BnbWFpbC5jb20iLCJ1c2VyX2lkIjoiZDYxNmY0ZjAtYmJhOC0xMWVhLTlhMGItOWQyYThmZjQzMjgxIiwiaWF0IjoxNTkzNjE5NzE3LCJleHAiOjE1OTM2NjI5MTd9.d5Ed_zOQhvncMYrHHTzpbjHsS2Uy1xo724L2FHG-6I0",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pdGVzaG1pdHRhbDAwM0BnbWFpbC5jb20iLCJ1c2VyX2lkIjoiZDYxNmY0ZjAtYmJhOC0xMWVhLTlhMGItOWQyYThmZjQzMjgxIiwiaWF0IjoxNTkzNjY4OTM5LCJleHAiOjE1OTM3MTIxMzl9.6Jm4vhh1GJ795pdO8_cn5DNdAepSrNOlo4bQP1npG9I",
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"source_location\": \"Bangalore\",\n    \"destination_location\": \"Kolkota\",\n    \"start_date\": \"2020-07-01T21:40:40.895Z\",\n    \"end_date\": \"2020-07-01T23:40:40.895Z\",\n    \"purpose_of_visit\": \"business\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "localhost:7005/fleetManagement/createTrip",
+					"raw": "localhost:7005/fleetManagement/getTrips?trip_time=PAST",
 					"host": [
 						"localhost"
 					],
 					"port": "7005",
 					"path": [
 						"fleetManagement",
-						"createTrip"
+						"getTrips"
+					],
+					"query": [
+						{
+							"key": "trip_time",
+							"value": "PAST"
+						}
 					]
-				}
+				},
+				"description": "trip_time can be UPCOMING, ONGOING, PAST"
 			},
 			"response": []
 		}
