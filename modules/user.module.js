@@ -1,4 +1,5 @@
 const userModel = require("../models/user.model");
+const updateProfileValidator = require("../validator/updateProfileValidator");
 
 let userModule = {
   getUser: function (body, callback) {
@@ -37,6 +38,10 @@ let userModule = {
     });
   },
   updateUserProfile: function (user_id, body, callback) {
+    let isVaild = updateProfileValidator.validator(body);
+    if (!isVaild[0]) {
+      return callback({ success: 0, message: isVaild[1] });
+    }
     userModel
       .updateUserProfile(user_id, body)
       .then(function (value) {

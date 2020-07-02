@@ -60,7 +60,10 @@ module.exports = {
       };
     }
 
-    if (body.destination_location === body.source_location) {
+    if (
+      body.destination_location.trim().toUpperCase() ===
+      body.source_location.trim().toUpperCase()
+    ) {
       return {
         continue: false,
         message: "destination_location and source_location are same",
