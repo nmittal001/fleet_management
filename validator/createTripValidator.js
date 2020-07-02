@@ -1,3 +1,4 @@
+const constants = require("../config/constants");
 module.exports = {
   /**
    * function for validation
@@ -5,8 +6,6 @@ module.exports = {
    * @return {Array}
    */
   validator: function (body) {
-    const datePattern = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/;
-
     if (!body.hasOwnProperty("source_location"))
       return { continue: false, message: "source_location is mandatory." };
     else if (body.source_location.trim().length <= 0)
@@ -21,7 +20,7 @@ module.exports = {
       return { continue: false, message: "start_date is mandatory." };
     else if (body.start_date.trim().length <= 0)
       return { continue: false, message: "start_date is empty." };
-    else if (!body.start_date.match(datePattern))
+    else if (!body.start_date.match(constants.DATE_PATTERN))
       return {
         continue: false,
         message:
@@ -32,7 +31,7 @@ module.exports = {
       return { continue: false, message: "end_date is mandatory." };
     else if (body.end_date.trim().length <= 0)
       return { continue: false, message: "end_date is empty." };
-    else if (!body.end_date.match(datePattern))
+    else if (!body.end_date.match(constants.DATE_PATTERN))
       return {
         continue: false,
         message: "end_date format should be in ISO (YYYY-MM-DDTHH:MN:SS.MSSZ).",

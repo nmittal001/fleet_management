@@ -31,7 +31,7 @@ let tripModel = {
       let query =
         "SELECT * FROM " +
         constants.TABLES.TRIP +
-        " WHERE user_id = ? AND start_date = ? ALLOW FILTERING ";
+        " WHERE user_id = ? AND status = 1 ALLOW FILTERING ";
       return db.queryPromise(query, [body.user_id, body.start_date], {
         prepare: true,
       });
@@ -66,7 +66,7 @@ let tripModel = {
         constants.TABLES.TRIP +
         " WHERE user_id = ? AND id = ? AND start_date > '" +
         date +
-        "' ALLOW FILTERING ";
+        "' AND status = 1 ALLOW FILTERING ";
       return db.queryPromise(query, [user_id, trip_id], {
         prepare: true,
       });
@@ -81,7 +81,9 @@ let tripModel = {
       let qry = "";
       if (trip_time === constants.PAST) {
         qry =
-          " WHERE user_id = ? AND end_date < '" + date + "' ALLOW FILTERING";
+          " WHERE user_id = ? AND end_date < '" +
+          date +
+          "' AND status = 1 ALLOW FILTERING";
       }
       if (trip_time === constants.ONGOING) {
         qry =
@@ -89,22 +91,44 @@ let tripModel = {
           date +
           "' AND end_date > '" +
           date +
-          "' ALLOW FILTERING";
+          "' AND status = 1 ALLOW FILTERING";
       }
       if (trip_time === constants.UPCOMING) {
         qry =
-          " WHERE user_id = ? AND start_date > '" + date + "' ALLOW FILTERING";
+          " WHERE user_id = ? AND start_date > '" +
+          date +
+          "' AND status = 1 ALLOW FILTERING";
       }
 
       let query = "SELECT * FROM " + constants.TABLES.TRIP + qry;
-      console.log("query-->>", query);
-      console.log("->", user_id, date);
       return db.queryPromise(query, [user_id], {
         prepare: true,
       });
     } catch (e) {
       console.log("Exception", e);
       return "Failed to get trips.";
+    }
+  },
+  checkCollisionOfDate: function (date, user_id) {
+    try {
+      let query = `SELECT * FROM ${constants.TABLES.TRIP} WHERE user_id = ${user_id} AND start_date <= '${date}' AND end_date >= '${date}' AND status = 1 ALLOW FILTERING`;
+      return db.queryPromise(query, [], {
+        prepare: true,
+      });
+    } catch (e) {
+      console.log("Exception", e);
+      return "Failed to get trip.";
+    }
+  },
+  checkCollisionOfStartEndDate: function (body) {
+    try {
+      let query = `SELECT * FROM ${constants.TABLES.TRIP} WHERE user_id = ${body.user_id} AND start_date >= '${body.start_date}' AND end_date <= '${body.end_date}' AND status = 1 ALLOW FILTERING `;
+      return db.queryPromise(query, [], {
+        prepare: true,
+      });
+    } catch (e) {
+      console.log("Exception", e);
+      return "Failed to get trip.";
     }
   },
 };

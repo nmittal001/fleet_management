@@ -99,7 +99,6 @@ app.use(function (req, res, next) {
           .status(401)
           .send({ success: 0, message: "Failed to authenticate token." });
       } else {
-        console.log("decoded", decoded);
         req.decoded = decoded;
         next();
       }

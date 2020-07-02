@@ -30,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"niteshmittal005@gmail.com\",\n    \"first_name\": \"Nitesh\",\n    \"last_name\": \"Mittal\",\n    \"phone_no\": \"9706323868\",\n    \"password\": \"password\",\n    \"driver_license\": \"MH1420110062821\"\n}",
+					"raw": "{\n    \"email\": \"niteshmittal001@gmail.com\",\n    \"first_name\": \"Nitesh\",\n    \"last_name\": \"Mittal\",\n    \"phone_no\": \"9706323868\",\n    \"password\": \"password\",\n    \"driver_license\": \"MH1420110062821\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -57,7 +57,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n \"email\": \"niteshmittal003@gmail.com\",\n    \"password\": \"password\"   \n}",
+					"raw": "{\n \"email\": \"niteshmittal001@gmail.com\",\n    \"password\": \"password\"   \n}",
 					"options": {
 						"raw": {
 							"language": "json"

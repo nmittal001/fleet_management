@@ -8,5 +8,6 @@ var constants = {
   PAST: "PAST",
   ONGOING: "ONGOING",
   UPCOMING: "UPCOMING",
+  DATE_PATTERN: /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/,
 };
 module.exports = constants;

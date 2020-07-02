@@ -14,7 +14,6 @@ let userModule = {
   },
   addUser: function (body, callback) {
     getUser = userModel.getUser(body).then(function (value) {
-      console.log(value);
       if (value && value.rows.length == 0) {
         userModel
           .addUser(body)

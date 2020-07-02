@@ -1,3 +1,4 @@
+const constants = require("../config/constants");
 module.exports = {
   /**
    * function for validation
@@ -5,7 +6,6 @@ module.exports = {
    * @param {Object} dpTripDetails
    */
   validator: function (body, dpTripDetails) {
-    const datePattern = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/;
     if (
       body.hasOwnProperty("source_location") &&
       body.hasOwnProperty("destination_location")
@@ -48,7 +48,7 @@ module.exports = {
           message: "start_date is less than present date and time.",
         };
       }
-      if (!body.start_date.match(datePattern))
+      if (!body.start_date.match(constants.DATE_PATTERN))
         return {
           continue: false,
           message:
@@ -57,7 +57,7 @@ module.exports = {
     }
 
     if (body.hasOwnProperty("end_date")) {
-      if (!body.end_date.match(datePattern))
+      if (!body.end_date.match(constants.DATE_PATTERN))
         return {
           continue: false,
           message:

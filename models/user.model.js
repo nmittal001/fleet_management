@@ -10,7 +10,7 @@ let userModel = {
         constants.TABLES.USER +
         " WHERE email = '" +
         body.email +
-        "' ALLOW FILTERING ";
+        "' AND status =1 ALLOW FILTERING ";
       return db.queryPromise(query, [], { prepare: true });
     } catch (e) {
       console.log("Exception", e);
