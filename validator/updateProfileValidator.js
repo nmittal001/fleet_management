@@ -31,6 +31,12 @@ module.exports = {
         return [false, "driver_license is empty"];
       }
     }
+    if (body.hasOwnProperty("email")) {
+      return [false, "email cannt update"];
+    }
+    if (body.hasOwnProperty("password")) {
+      return [false, "password cannt update"];
+    }
     return [true, "ok"];
   },
 };
